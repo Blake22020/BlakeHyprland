@@ -505,6 +505,11 @@ Item {
                         font.family: "Material Design Icons"
                         font.pixelSize: 24
                         color: pywal.foreground
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: volumeMonitor.toggleMute()
+                        }
                     }
                     
                     Slider {
@@ -514,15 +519,7 @@ Item {
                         value: volumeMonitor.percentage
                         
                         onMoved: {
-                            // Update using pamixer and write to file
-                            // Also update the file immediately for OSD
-                            audio.setVolume(value / 100)                                                                     │
-                            volumeUpdateProc.running = true
-                        }
-                        
-                        Process {
-                            id: volumeUpdateProc
-                            command: ["sh", "-c", `pamixer --set-volume ${parent.value.toFixed(0)} && echo ${parent.value.toFixed(0)} > /tmp/volume_osd`]
+                            volumeMonitor.setVolume(value)
                         }
                         
                         background: Rectangle {

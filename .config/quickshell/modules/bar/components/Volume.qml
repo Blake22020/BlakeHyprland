@@ -104,13 +104,13 @@ Item {
         
         onWheel: wheel => {
             if (wheel.angleDelta.y > 0) {
-                audio.increaseVolume()
+                volumeMonitor.increaseVolume()
             } else {
-                audio.decreaseVolume()
+                volumeMonitor.decreaseVolume()
             }
         }
         
-        onClicked: audio.toggleMute()
+        onClicked: volumeMonitor.toggleMute()
     }
     
     // Volume change pulse

@@ -93,13 +93,16 @@ Singleton {
     
     // Clear all notifications
     function clearAll() {
-        notifications.forEach(n => n.close());
+        // Create a copy of the array to avoid issues with modifying it while iterating
+        const notifsToDelete = [...notifications];
+        notifsToDelete.forEach(n => deleteNotification(n));
         console.log("🧹 [Notifs Service] All notifications cleared");
     }
     
     // Clear notifications from specific app
     function clearApp(appName) {
-        notifications.filter(n => n.appName === appName).forEach(n => n.close());
+        const notifsToDelete = notifications.filter(n => n.appName === appName);
+        notifsToDelete.forEach(n => deleteNotification(n));
         console.log("🧹 [Notifs Service] Cleared notifications from:", appName);
     }
 

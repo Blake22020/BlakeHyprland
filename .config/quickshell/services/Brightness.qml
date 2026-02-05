@@ -7,16 +7,12 @@ import QtQuick
 Singleton {
     id: root
     
-    property real brightness: 0.5
+    property real brightness: 0
     property real maxBrightness: 1.0
     
     // Alias for easier access
     readonly property real level: brightness
     readonly property int percentage: Math.round(brightness * 100)
-    
-    // Updated backlight path
-    readonly property string backlightPath: "/sys/class/backlight/amdgpu_bl1/brightness"
-    readonly property string maxBrightnessPath: "/sys/class/backlight/amdgpu_bl1/max_brightness"
     
     property int currentValue: 0
     property int maxValue: 255
@@ -28,10 +24,12 @@ Singleton {
     }
     
     function readMaxBrightness() {
+        maxBrightnessProcess.command = ["/bin/brightnessctl", "m"]
         maxBrightnessProcess.running = true
     }
     
     function readBrightness() {
+        brightnessProcess.command = ["/bin/brightnessctl", "g"]
         brightnessProcess.running = true
     }
     
@@ -39,8 +37,8 @@ Singleton {
         // Clamp between 0 and 1
         const newValue = Math.max(0, Math.min(1, value))
         
-        // Use brightnessctl for AMD
-        const cmd = "brightnessctl set " + Math.round(newValue * 100) + "% && cat " + backlightPath
+        // Use brightnessctl
+        const cmd = "brightnessctl set " + Math.round(newValue * 100) + "%"
         setBrightnessProcess.command = ["/bin/sh", "-c", cmd]
         setBrightnessProcess.running = true
         
@@ -58,7 +56,6 @@ Singleton {
     // Read max brightness
     Process {
         id: maxBrightnessProcess
-        command: ["/bin/cat", maxBrightnessPath]
         running: false
         
         stdout: SplitParser {
@@ -74,7 +71,6 @@ Singleton {
     // Read current brightness
     Process {
         id: brightnessProcess
-        command: ["/bin/cat", backlightPath]
         running: false
         
         stdout: SplitParser {

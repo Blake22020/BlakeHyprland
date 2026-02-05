@@ -77,7 +77,7 @@ Rectangle {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 hoverEnabled: true
-                onClicked: root.audio.toggleMute()
+                onClicked: volumeMonitor.toggleMute()
             }
         }
         
@@ -93,7 +93,7 @@ Rectangle {
             value: root.currentVolume
             live: false
             
-            onMoved: root.audio.setVolume(value / 100)
+            onMoved: volumeMonitor.setVolume(value)
             
             background: Rectangle {
                 x: slider.leftPadding

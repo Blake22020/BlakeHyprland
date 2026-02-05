@@ -45,35 +45,35 @@ QtObject {
 
     readonly property var font: QtObject {
         property string family: "Inter"
-        property int small: 10
-        property int medium: 12
-        property int large: 14
-        property int huge: 16
+        property int small: 12
+        property int medium: 14
+        property int large: 16
+        property int huge: 18
     }
 
     // Material 3 Typography Scale
     readonly property var typography: QtObject {
         property string family: "Inter"
         
-        readonly property var displayLarge: QtObject { property int size: 57; property int weight: Font.Normal }
-        readonly property var displayMedium: QtObject { property int size: 45; property int weight: Font.Normal }
-        readonly property var displaySmall: QtObject { property int size: 36; property int weight: Font.Normal }
+        readonly property var displayLarge: QtObject { property int size: 60; property int weight: Font.Normal }
+        readonly property var displayMedium: QtObject { property int size: 48; property int weight: Font.Normal }
+        readonly property var displaySmall: QtObject { property int size: 39; property int weight: Font.Normal }
         
-        readonly property var headlineLarge: QtObject { property int size: 32; property int weight: Font.Normal }
-        readonly property var headlineMedium: QtObject { property int size: 28; property int weight: Font.Normal }
-        readonly property var headlineSmall: QtObject { property int size: 24; property int weight: Font.Normal }
+        readonly property var headlineLarge: QtObject { property int size: 35; property int weight: Font.Normal }
+        readonly property var headlineMedium: QtObject { property int size: 31; property int weight: Font.Normal }
+        readonly property var headlineSmall: QtObject { property int size: 27; property int weight: Font.Normal }
         
-        readonly property var titleLarge: QtObject { property int size: 22; property int weight: Font.Normal }
-        readonly property var titleMedium: QtObject { property int size: 16; property int weight: Font.Medium }
-        readonly property var titleSmall: QtObject { property int size: 14; property int weight: Font.Medium }
+        readonly property var titleLarge: QtObject { property int size: 25; property int weight: Font.Normal }
+        readonly property var titleMedium: QtObject { property int size: 18; property int weight: Font.Medium }
+        readonly property var titleSmall: QtObject { property int size: 16; property int weight: Font.Medium }
         
-        readonly property var labelLarge: QtObject { property int size: 14; property int weight: Font.Medium }
-        readonly property var labelMedium: QtObject { property int size: 12; property int weight: Font.Medium }
-        readonly property var labelSmall: QtObject { property int size: 11; property int weight: Font.Medium }
+        readonly property var labelLarge: QtObject { property int size: 16; property int weight: Font.Medium }
+        readonly property var labelMedium: QtObject { property int size: 14; property int weight: Font.Medium }
+        readonly property var labelSmall: QtObject { property int size: 13; property int weight: Font.Medium }
         
-        readonly property var bodyLarge: QtObject { property int size: 16; property int weight: Font.Normal }
-        readonly property var bodyMedium: QtObject { property int size: 14; property int weight: Font.Normal }
-        readonly property var bodySmall: QtObject { property int size: 12; property int weight: Font.Normal }
+        readonly property var bodyLarge: QtObject { property int size: 18; property int weight: Font.Normal }
+        readonly property var bodyMedium: QtObject { property int size: 16; property int weight: Font.Normal }
+        readonly property var bodySmall: QtObject { property int size: 14; property int weight: Font.Normal }
     }
 
     readonly property var anim: QtObject {

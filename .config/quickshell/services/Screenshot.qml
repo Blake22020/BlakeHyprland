@@ -87,15 +87,52 @@ Singleton {
                 // Copy to clipboard using wl-copy with shell redirection
                 clipboardProc.exec(["sh", "-c", `wl-copy < "${root.lastScreenshotPath}"`])
                 
-                notifyProc.exec([
+                // Get focused monitor and show notification there
+                monitorGeomProc.exec(["sh", "-c", "hyprctl monitors -j | jq '.[] | select(.focused)'"])
+            } else {
+                console.error("📸 [Screenshot] Failed with code:", code)
+            }
+        }
+    }
+    
+    // Get focused monitor geometry to show notification
+    Process {
+        id: monitorGeomProc
+        onExited: code => {
+            let cmd = []
+            if (code === 0 && stdout.trim() !== "") {
+                try {
+                    const monitor = JSON.parse(stdout.trim())
+                    const x = monitor.x + (monitor.width / 2)
+                    const y = monitor.y + 40 // Position near top-center
+                    
+                    cmd = [
+                        "notify-send",
+                        "-h", `int:x:${Math.round(x)}`,
+                        "-h", `int:y:${Math.round(y)}`,
+                        "-i", root.lastScreenshotPath,
+                        "Screenshot captured",
+                        "Saved and copied to clipboard"
+                    ]
+                } catch(e) {
+                    // JSON parsing failed, fallback
+                    cmd = [
+                        "notify-send",
+                        "-i", root.lastScreenshotPath,
+                        "Screenshot captured",
+                        `Saved and copied to clipboard`
+                    ]
+                }
+            } else {
+                // Fallback to old method if hyprctl fails
+                cmd = [
                     "notify-send",
                     "-i", root.lastScreenshotPath,
                     "Screenshot captured",
                     `Saved and copied to clipboard`
-                ])
-            } else {
-                console.error("📸 [Screenshot] Failed with code:", code)
+                ]
             }
+            notifyProc.exec(cmd)
         }
     }
     

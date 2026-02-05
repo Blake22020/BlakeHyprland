@@ -4,11 +4,11 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 
-// Monitor volume from /tmp/volume_osd file (workaround for broken PipeWire)
+// Monitor volume using pamixer
 Singleton {
     id: root
     
-    property int percentage: 50
+    property int percentage: 0
     property bool muted: false
     
     // Fast polling for responsive OSD (200ms)
@@ -20,32 +20,21 @@ Singleton {
         
         onTriggered: {
             volumeProc.running = true
+            muteProc.running = true
         }
     }
     
     Process {
         id: volumeProc
-        command: ["cat", "/tmp/volume_osd"]
+        command: ["pamixer", "--get-volume"]
         
         stdout: StdioCollector {
             onStreamFinished: {
-                const vol = parseInt(text.trim()) || 50
-                if (vol !== root.percentage) {
+                const vol = parseInt(text.trim())
+                if (!isNaN(vol) && vol !== root.percentage) {
                     root.percentage = vol
                 }
             }
-        }
-    }
-    
-    // Monitor mute state
-    Timer {
-        interval: 300
-        repeat: true
-        running: true
-        triggeredOnStart: true
-        
-        onTriggered: {
-            muteProc.running = true
         }
     }
     
@@ -59,8 +48,36 @@ Singleton {
             }
         }
     }
+
+    // Process for setting volume/mute
+    Process { id: controlProc }
+
+    function setVolume(newPercentage) {
+        controlProc.command = ["pamixer", "--set-volume", Math.round(newPercentage)]
+        controlProc.running = true
+        // force update
+        volumeProc.running = true
+    }
+
+    function increaseVolume() {
+        controlProc.command = ["pamixer", "-i", "5"]
+        controlProc.running = true
+        volumeProc.running = true
+    }
+
+    function decreaseVolume() {
+        controlProc.command = ["pamixer", "-d", "5"]
+        controlProc.running = true
+        volumeProc.running = true
+    }
+
+    function toggleMute() {
+        controlProc.command = ["pamixer", "-t"]
+        controlProc.running = true
+        muteProc.running = true
+    }
     
     Component.onCompleted: {
-        console.log("📊 [VolumeMonitor] Service loaded - monitoring /tmp/volume_osd")
+        console.log("📊 [VolumeMonitor] Service loaded - monitoring with pamixer")
     }
 }
