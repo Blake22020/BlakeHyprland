@@ -10,7 +10,7 @@ local on_error = "rgb(690005)"
 local shadow = "rgb(000000)"
 
 local function apply_theme()
-    hl.config({
+hl.config({
         general = {
             col = {
                 active_border = primary,
@@ -46,8 +46,20 @@ local function apply_theme()
                 text_color_locked_active = on_error,
                 text_color_locked_inactive = on_surface,
             },
-        },
-    })
+    },
+})
+
+hl.layer_rule({
+    name = "noctalia surfaces",
+    match = {
+        namespace = "^(noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher))$",
+    },
+    blur = true,
+    blur_popups = true,
+    ignore_alpha = 0.01,
+    xray = false,
+    no_anim = true,
+})
 end
 
 return {
