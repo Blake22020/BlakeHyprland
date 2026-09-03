@@ -31,7 +31,7 @@ hl.config({
     general = { gaps_in = 5, gaps_out = 10, border_size = 1, resize_on_border = true, allow_tearing = false, layout = "dwindle" },
     decoration = {
         rounding = 16, rounding_power = 2, active_opacity = 1, inactive_opacity = 0.8,
-        blur = { enabled = true, size = 8, passes = 2, ignore_opacity = true, new_optimizations = true, xray = true },
+        blur = { enabled = true, size = 8, passes = 2, ignore_opacity = true, new_optimizations = true, xray = false },
         shadow = { enabled = true, range = 8, render_power = 4, color = "rgba(00000088)" },
     },
     input = { kb_layout = "us,ru", kb_options = "grp:alt_shift_toggle", follow_mouse = 1, touchpad = { natural_scroll = true, tap_to_click = true, drag_lock = true } },
