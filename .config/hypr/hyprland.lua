@@ -42,8 +42,8 @@ hl.window_rule({ name = "float file progress", match = { title = "FIle Operation
 hl.window_rule({ name = "opacity global", match = { class = "^(.*)$" }, opacity = "0.8 0.6" })
 
 hl.layer_rule({
-    name = "quickshell bar",
-    match = { namespace = "^quickshell$" },
+    name = "noctalia panels",
+    match = { namespace = "^(noctalia-bar-.*|noctalia-dock)$" },
     no_anim = true,
 })
 
