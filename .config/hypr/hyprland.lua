@@ -41,6 +41,12 @@ hl.window_rule({ name = "float pavucontrol", match = { class = "pavucontrol" }, 
 hl.window_rule({ name = "float file progress", match = { title = "FIle Operation Progress" }, float = true })
 hl.window_rule({ name = "opacity global", match = { class = "^(.*)$" }, opacity = "0.8 0.6" })
 
+hl.layer_rule({
+    name = "quickshell bar",
+    match = { namespace = "^quickshell$" },
+    no_anim = true,
+})
+
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
 local function bind(key, dispatcher) hl.bind(mainMod .. " + " .. key, dispatcher) end
